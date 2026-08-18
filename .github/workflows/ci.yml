@@ -29,3 +29,6 @@ jobs:
 
       - name: Check JavaScript syntax
         run: node --check src/server.js
+
+      - name: Run tests
+        run: npm test

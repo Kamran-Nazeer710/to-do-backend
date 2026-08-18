@@ -13,19 +13,19 @@ const app = express();
 |--------------------------------------------------------------------------
 */
 
-// Parse JSON body
+// Parse JSON request bodies
 app.use(express.json());
 
-// Parse URL Encoded Data
+// Parse URL-encoded request bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS
 app.use(cors());
 
-// Security Headers
+// Security headers
 app.use(helmet());
 
-// HTTP Logger
+// HTTP request logger
 app.use(morgan("dev"));
 
 /*
@@ -35,6 +35,21 @@ app.use(morgan("dev"));
 */
 
 app.use("/", routes);
+
+/*
+|--------------------------------------------------------------------------
+| Temporary Route Test
+|--------------------------------------------------------------------------
+| Remove this later after routing is confirmed.
+|--------------------------------------------------------------------------
+*/
+
+app.get("/test-login-route", (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: "App is receiving routes correctly",
+  });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +71,7 @@ app.use((req, res) => {
 */
 
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error("ERROR:", err);
 
   return res.status(err.status || 500).json({
     success: false,
